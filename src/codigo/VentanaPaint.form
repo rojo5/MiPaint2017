@@ -38,7 +38,9 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="lienzo">
       <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="lienzoMouseDragged"/>
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lienzoMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lienzoMouseReleased"/>
       </Events>
 
       <Layout>
