@@ -28,6 +28,7 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     Circulo miCirculo;
     Cuadrado miCuadrado;
+    Triangulo miTriangulo;
 
     /**
      * Creates new form VentanaPaint
@@ -86,6 +87,7 @@ public class VentanaPaint extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         jButton2.setText("Aceptar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -176,6 +178,13 @@ public class VentanaPaint extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setText("Triangulos");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton6MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,6 +195,8 @@ public class VentanaPaint extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -197,7 +208,8 @@ public class VentanaPaint extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lienzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -213,11 +225,15 @@ public class VentanaPaint extends javax.swing.JFrame {
         switch (formaSeleccionada) {
             case 0:
                 miCirculo = new Circulo(evt.getX(), evt.getY(), 1, colorSeleccionado, true);
-                miCirculo.dibujate(bufferGraphics);
+                miCirculo.dibujate(bufferGraphics, evt.getX());
                 break;
             case 1:
                 miCuadrado = new Cuadrado(evt.getX(), evt.getY(), 1, colorSeleccionado, true);
-                miCuadrado.dibujate(bufferGraphics);
+                miCuadrado.dibujate(bufferGraphics, evt.getX());
+                break;
+            case 2:
+                miTriangulo = new Triangulo(evt.getX(), evt.getY(), 1, colorSeleccionado, true);
+                miTriangulo.dibujate(bufferGraphics, evt.getX());
                 break;
         }
 
@@ -232,21 +248,9 @@ public class VentanaPaint extends javax.swing.JFrame {
         bufferGraphics.drawImage(buffer2, 0, 0, null);
 
         switch (formaSeleccionada) {
-            case 0:
-                
-                 int radio = Math.abs((int) miCirculo.x - evt.getX());
-                miCirculo.width = radio;
-                miCirculo.height = radio;
-                miCirculo.dibujate(bufferGraphics);
-                break;
-            case 1:
-                
-                       
-                 int lado = Math.abs((int) miCuadrado.x - evt.getX());
-                miCuadrado.width = lado;
-                miCuadrado.height = lado;
-                miCuadrado.dibujate(bufferGraphics);
-                break;
+            case 0: miCirculo.dibujate(bufferGraphics, evt.getX()); break;
+            case 1: miCuadrado.dibujate(bufferGraphics, evt.getX()); break;
+            case 2: miTriangulo.dibujate(bufferGraphics, evt.getX()); break;
         }
        
 
@@ -260,9 +264,11 @@ public class VentanaPaint extends javax.swing.JFrame {
    
 
        switch (formaSeleccionada) {
-            case 0: miCirculo.dibujate(buffer2Graphics);
+            case 0: miCirculo.dibujate(buffer2Graphics, evt.getX());
                 break;
-            case 1: miCuadrado.dibujate(buffer2Graphics);
+            case 1: miCuadrado.dibujate(buffer2Graphics , evt.getX());
+                break;
+            case 2: miTriangulo.dibujate(buffer2Graphics , evt.getX());
                 break;
         }
 
@@ -289,6 +295,10 @@ public class VentanaPaint extends javax.swing.JFrame {
     private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
         formaSeleccionada = 0;
     }//GEN-LAST:event_jButton4MousePressed
+
+    private void jButton6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MousePressed
+       formaSeleccionada = 2;
+    }//GEN-LAST:event_jButton6MousePressed
 
     /**
      * @param args the command line arguments
@@ -331,6 +341,7 @@ public class VentanaPaint extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JPanel lienzo;
