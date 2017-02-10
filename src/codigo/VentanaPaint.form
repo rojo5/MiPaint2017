@@ -88,6 +88,10 @@
               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Component id="jButton7" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" pref="70" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -103,6 +107,8 @@
                   <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButton8" max="32767" attributes="0"/>
+                  <Component id="jButton7" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lienzo" min="-2" max="-2" attributes="0"/>
@@ -161,6 +167,22 @@
       </Properties>
       <Events>
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton6MousePressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Hexagono"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton7MousePressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pentagono"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton8MousePressed"/>
       </Events>
     </Component>
   </SubComponents>
