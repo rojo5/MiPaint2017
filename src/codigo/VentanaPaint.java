@@ -19,7 +19,7 @@ public class VentanaPaint extends javax.swing.JFrame {
 
     BufferedImage buffer = null;
     BufferedImage buffer2 = null;
-    
+
     Graphics2D bufferGraphics, buffer2Graphics, lienzoGraphics = null;
 
     Color colorSeleccionado = Color.BLUE;
@@ -31,6 +31,8 @@ public class VentanaPaint extends javax.swing.JFrame {
     Triangulo miTriangulo;
     Pentagono miPentagono;
     Hexagono miHexagono;
+    Forma miForma;
+    int numLados = 0;
 
     /**
      * Creates new form VentanaPaint
@@ -39,7 +41,7 @@ public class VentanaPaint extends javax.swing.JFrame {
         initComponents();
         inicializaBuffers();
         jDialog1.setSize(673, 450);
-         
+
     }
 
     private void inicializaBuffers() {
@@ -51,8 +53,6 @@ public class VentanaPaint extends javax.swing.JFrame {
         //Dibujamos un rectangulo blanco del tamaño del lienzo
         bufferGraphics.setColor(Color.white);
         bufferGraphics.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
-
-        
 
         //Inicializo el 2º buffer
         //Creo una imagen del mismo ancho y alto que  el lienzo
@@ -92,6 +92,7 @@ public class VentanaPaint extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         jButton2.setText("Aceptar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,6 +204,13 @@ public class VentanaPaint extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setText("Estrella");
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton9MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -219,6 +227,8 @@ public class VentanaPaint extends javax.swing.JFrame {
                 .addComponent(jButton8)
                 .addGap(12, 12, 12)
                 .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -233,7 +243,8 @@ public class VentanaPaint extends javax.swing.JFrame {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lienzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -241,42 +252,50 @@ public class VentanaPaint extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void lienzoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lienzoMousePressed
-  switch(formaSeleccionada){
-           case 0:  miCirculo = new Circulo(evt.getX(), evt.getY(), 1, colorSeleccionado, true);break;
-           case 1: miCuadrado = new Cuadrado(evt.getX(), evt.getY(), 1, colorSeleccionado, true); break;  
-           case 2: miTriangulo = new Triangulo(evt.getX(), evt.getY(), 1, colorSeleccionado, true); break;
-           case 3: miPentagono = new Pentagono(evt.getX(), evt.getY(), new int[5], new int[5], colorSeleccionado, true); break; 
-           case 4: miHexagono = new Hexagono(evt.getX(), evt.getY(), new int[6], new int[6], colorSeleccionado, true); break;                
-       }
-       repaint(0,0,1,1);
+        switch (numLados) {
+            case 3:  miForma = new Triangulo(evt.getX(), evt.getY(), colorSeleccionado, true); break;
+            case 4:  miForma = new Cuadrado(evt.getX(), evt.getY(), colorSeleccionado, true); break;
+            case 5:  miForma = new Pentagono(evt.getX(), evt.getY(), colorSeleccionado, true); break;
+            case 6:  miForma = new Hexagono(evt.getX(), evt.getY(), colorSeleccionado, true); break;
+            case 12: miForma = new Estrella(evt.getX(), evt.getY(),colorSeleccionado, true);break;
+            case 100:miForma = new Circulo(evt.getX(), evt.getY(), colorSeleccionado, true); break;
+        }
+
+       
+        repaint(0, 0, 1, 1);
     }//GEN-LAST:event_lienzoMousePressed
 
     private void lienzoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lienzoMouseDragged
         //borro lo que hubiera en el lienzo
         bufferGraphics.drawImage(buffer2, 0, 0, null);
-        switch (formaSeleccionada) {
-            case 0: miCirculo.dibujate(bufferGraphics, evt.getX()); break;
-            case 1: miCuadrado.dibujate(bufferGraphics, evt.getX());break;
-            case 2: miTriangulo.dibujate(bufferGraphics, evt.getY());break;
-            case 3: miPentagono.dibujate(bufferGraphics, evt.getY());break;
-            case 4: miHexagono.dibujate(bufferGraphics, evt.getY());break;
-        }
 
-       lienzoGraphics.drawImage(buffer, 0 , 0, null);
-       repaint(0,0,1,1);
+        miForma.dibujate(bufferGraphics, evt.getX(), evt.getY());
+
+//        switch (formaSeleccionada) {
+//            case 0: miCirculo.dibujate(bufferGraphics, evt.getX()); break;
+//            case 1: miCuadrado.dibujate(bufferGraphics, evt.getX());break;
+//            case 2: miTriangulo.dibujate(bufferGraphics, evt.getY());break;
+//            case 3: miPentagono.dibujate(bufferGraphics, evt.getY());break;
+//            case 4: miHexagono.dibujate(bufferGraphics, evt.getY());break;
+//        }
+        lienzoGraphics.drawImage(buffer, 0, 0, null);
+        repaint(0, 0, 1, 1);
     }//GEN-LAST:event_lienzoMouseDragged
 
     private void lienzoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lienzoMouseReleased
-   switch(formaSeleccionada){
-           case 0: miCirculo.dibujate(buffer2Graphics, evt.getX()); break;
-           case 1: miCuadrado.dibujate(buffer2Graphics, evt.getX());break;
-           case 2: miTriangulo.dibujate(buffer2Graphics, evt.getY());break;
-           case 3: miPentagono.dibujate(buffer2Graphics, evt.getY());break;
-           case 4: miHexagono.dibujate(buffer2Graphics, evt.getY());break;
-           
-       }
+
+     miForma.dibujate(buffer2Graphics, evt.getX() , evt.getY());
+
+//   switch(formaSeleccionada){
+//           case 0: miCirculo.dibujate(buffer2Graphics, evt.getX()); break;
+//           case 1: miCuadrado.dibujate(buffer2Graphics, evt.getX());break;
+//           case 2: miTriangulo.dibujate(buffer2Graphics, evt.getY());break;
+//           case 3: miPentagono.dibujate(buffer2Graphics, evt.getY());break;
+//           case 4: miHexagono.dibujate(buffer2Graphics, evt.getY());break;
+//           
+//       }
     }//GEN-LAST:event_lienzoMouseReleased
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
@@ -293,24 +312,34 @@ public class VentanaPaint extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3MousePressed
 
     private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
-        formaSeleccionada = 1;
+        formaSeleccionada = 1; //Cuadrado
+        numLados = 4;
     }//GEN-LAST:event_jButton5MousePressed
 
     private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
-        formaSeleccionada = 0;
+        formaSeleccionada = 0; //Circulo
+        numLados = 50;
     }//GEN-LAST:event_jButton4MousePressed
 
     private void jButton6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MousePressed
-       formaSeleccionada = 2;
+        formaSeleccionada = 2; //Triangulo
+        numLados = 3;
     }//GEN-LAST:event_jButton6MousePressed
 
     private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
-        formaSeleccionada = 4;
+        formaSeleccionada = 4; //hexagonos
+        numLados = 6;
     }//GEN-LAST:event_jButton7MousePressed
 
     private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
-          formaSeleccionada = 3;
+        formaSeleccionada = 3; //Pentagonos
+        numLados = 5;
     }//GEN-LAST:event_jButton8MousePressed
+
+    private void jButton9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MousePressed
+                    //Estrella
+          numLados = 12;
+    }//GEN-LAST:event_jButton9MousePressed
 
     /**
      * @param args the command line arguments
@@ -356,6 +385,7 @@ public class VentanaPaint extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JPanel lienzo;
